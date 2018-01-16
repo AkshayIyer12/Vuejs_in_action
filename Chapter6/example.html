@@ -5,12 +5,18 @@
 </head>
 <body>
   <div id="app">
-    <my-component text="World"></my-component>
+    <my-component></my-component>
+    <my-component></my-component>
+    <my-component></my-component>
   </div>
   <script>
   const MyComponent = {
-    template: '<div>Hello {{text}}!</div>',
-    props: ['text']
+    template: '<div><button v-on:click="counter += 1">{{counter}}</button></div>',
+    data () {
+      return {
+        counter: 0
+      }
+    }
   }
   new Vue({
     el: '#app',
