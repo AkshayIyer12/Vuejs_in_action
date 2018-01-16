@@ -10,7 +10,8 @@ let webstore = new Vue({
         'organic goodness for your cat.',
       price: 2000,
       image: 'assets/images/product-fullsize.png',
-      availableInventory: 10
+      availableInventory: 10,
+      rating: 3
     },
     cart: [],
     showProduct: true,
@@ -34,7 +35,7 @@ let webstore = new Vue({
     }
   },
   filters: {
-    formatPrice: function (price) {
+    formatPrice (price) {
       if (!parseInt(price)) {
         return ''
       }
@@ -53,66 +54,69 @@ let webstore = new Vue({
     }
   },
   methods: {
-    addToCart: function () {
+    addToCart () {
       this.cart.push(this.product.id)
     },
-    showCheckout: function () {
+    showCheckout () {
       this.showProduct = !this.showProduct
     },
-    removeFromCart: function () {
+    removeFromCart () {
       this.cart.pop()
     },
-    submitForm: function () {
+    submitForm () {
       alert('submitted')
+    },
+    checkRating (n) {
+      return this.product.rating - n >= 0
     }
   },
   computed: {
-    cartItemCount: function () {
+    cartItemCount () {
       return this.cart.length || ''
     },
-    canAddToCart: function () {
+    canAddToCart () {
       return this.product.availableInventory > this.cartItemCount
     },
-    canRemoveFromCart: function () {
+    canRemoveFromCart () {
       return this.cart.length > 0
     }
   },
-  beforeCreate: function () {
+  beforeCreate () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('beforeCreate')
     }
   },
-  created: function () {
+  created () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('created')
     }
   },
-  beforeMount: function () {
+  beforeMount () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('beforeMount')
     }
   },
-  mounted: function () {
+  mounted () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('mounted')
     }
   },
-  beforeUpdate: function () {
+  beforeUpdate () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('beforeUpdate')
     }
   },
-  updated: function () {
+  updated () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('updated')
     }
   },
-  beforeDestroy: function () {
+  beforeDestroy () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('beforeDestroy')
     }
   },
-  destroyed: function () {
+  destroyed () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log('destroyed')
     }
