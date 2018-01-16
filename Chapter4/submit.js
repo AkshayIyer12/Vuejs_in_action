@@ -1,0 +1,5 @@
+methods: {
+submitForm() {
+alert('Submitted');
+}
+}

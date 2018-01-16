@@ -1,0 +1,156 @@
+<html>
+
+<head>
+  <title>Vue.js Pet Depot</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+
+  <body>
+    <div id="app">
+      <header>
+        <header>
+
+          <div class="navbar navbar-default">
+
+            <div class="navbar-header">
+              <h1 v-text="sitename">{{ sitename }}</h1>
+            </div>
+
+            <div class="nav navbar-nav navbar-right cart">
+              <button type="button" class="btn btn-default btn-lg" v-on:click="showCheckout">
+                <span class="glyphicon glyphicon-shopping-cart">{{ cartItemCount }}</span> Checkout
+              </button>
+            </div>
+
+          </div>
+
+        </header>
+      </header>
+      <main>
+        <div class="row product">
+
+          <div v-if="showProduct">
+            <div class="col-md-2 col-md-offset-1">
+              <figure>
+                <img v-bind:src="product.image">
+              </figure>
+            </div>
+
+            <div class="col-md-6 col-md-offset-2 description">
+              <h1 v-text="product.title"></h1>
+              <p v-html="product.description"></p>
+              <p class="price">{{ product.price | formatPrice }}</p>
+              <button class="btn btn-primary btn-lg" v-on:click="addToCart" v-if="canAddToCart">Add to cart</button>
+              <button disabled class="btn btn-primary btn-lg" v-else>Add to cart</button>
+              <button class="btn btn-primary btn-lg" v-on:click="removeFromCart" v-if="canRemoveFromCart">Remove from cart</button>
+              <button disabled class="btn btn-primary btn-lg" v-else>Remove from cart</button>
+            </div>
+          </div>
+
+          <div v-else>
+            <div class="col-md-10 col-md-offset-1">
+              <div class="panel panel-info">
+                <div class="panel-heading">Pet Depot Checkout</div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <h4>
+                        <strong>Enter Your Information</strong>
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-6">
+                      <strong>First Name:</strong>
+                      <input v-model.trim="order.firstName" class="form-control">
+                    </div>
+
+                    <div class="col-md-6">
+                      <strong>Last Name:</strong>
+                      <input v-model.trim="order.lastName" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <strong>Address:</strong>
+                    </div>
+                    <div class="col-md-12">
+                      <input v-model.trim="order.address" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <strong>City:</strong>
+                    </div>
+                    <div class="col-md-12">
+                      <input v-model.trim="order.city" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-2">
+                      <strong>State:</strong>
+                      <select v-model="order.state" class="form-control">
+                        <option disabled value="">State</option>
+                        <option v-for="(state, key) in states" v-bind:value="state">{{key}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                      <strong>Zip / Postal Code:</strong>
+                      <input v-model.number="order.zip" class="form-control" type="number" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-6 boxes">
+                      <input type="checkbox" id="gift" value="true" v-model="order.gift">
+                      <label for="gift">Ship As Gift?</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-6 boxes">
+                      <input type="radio" id="home" value="Home" v-model="order.method">
+                      <label for="home">Home</label>
+                      <input type="radio" id="business" value="Business" v-model="order.method">
+                      <label for="business">Business</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-6">
+                      <button type="submit" class="btn btn-primary submit" v-on:click="submitForm">Place Order</button>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 verify">
+                    <pre>
+                          First Name: {{order.firstName}}
+                          Last Name: {{order.lastName}}
+                          Address: {{order.address}}
+                          City: {{order.city}}
+                          Zip: {{order.zip}}
+                          State: {{order.state}}
+                          Method: {{order.method}}
+                          Gift: {{order.gift}}
+                        </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+</head>
+<script type="text/javascript" src="assets/js/helper.js"></script>
+</script>
+</body>
+
+</html>
