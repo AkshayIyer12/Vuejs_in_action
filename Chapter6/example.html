@@ -8,11 +8,14 @@
     <my-component></my-component>
   </div>
   <script>
-  Vue.component('my-component', {
+  const Component = {
     template: '<div>Hello World</div>'
-  })
+  }
   new Vue({
-    el: '#app'
+    el: '#app',
+    components: {
+      'my-component': Component
+    }
   })
   </script>
 </body>
