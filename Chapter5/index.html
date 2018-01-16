@@ -53,7 +53,7 @@
               </span>
               <span class="inventory-message" v-else>Buy Now!</span>
               <div class="rating">
-                <span v-for="n in 5">☆</span>
+                <span v-bind:class="{'rating-active': checkRating(n)}" v-for="n in 5">☆</span>
               </div>
               <button class="btn btn-primary btn-lg" v-on:click="removeFromCart" v-if="canRemoveFromCart">Remove from cart</button>
               <button disabled class="btn btn-primary btn-lg" v-else>Remove from cart</button>
