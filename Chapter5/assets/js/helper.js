@@ -3,16 +3,6 @@ let webstore = new Vue({
   el: '#app',
   data: {
     sitename: 'Vue.js Pet Depot',
-    product: {
-      id: 1001,
-      title: 'Cat Food, 25lb bag',
-      description: 'A 25 pound bag of <em>irresistible</em>, ' +
-        'organic goodness for your cat.',
-      price: 2000,
-      image: 'assets/images/product-fullsize.png',
-      availableInventory: 10,
-      rating: 3
-    },
     cart: [],
     showProduct: true,
     order: {
@@ -27,6 +17,7 @@ let webstore = new Vue({
       sendGift: 'Send As A Gift',
       dontSendGift: 'Do Not Send As A Gift'
     },
+    products: {},
     states: {
       AL: 'Alabama',
       AR: 'Arizona',
@@ -54,31 +45,49 @@ let webstore = new Vue({
     }
   },
   methods: {
-    addToCart () {
-      this.cart.push(this.product.id)
+    addToCart (aProduct) {
+      this.cart.push(aProduct.id)
     },
     showCheckout () {
       this.showProduct = !this.showProduct
     },
-    removeFromCart () {
-      this.cart.pop()
-    },
     submitForm () {
       alert('submitted')
     },
-    checkRating (n) {
-      return this.product.rating - n >= 0
+    checkRating (n, myProduct) {
+      return myProduct.rating - n >= 0
+    },
+    cartCount (id) {
+      let count = 0
+      for (let i = 0; i < this.cart.length; i++) {
+        if (this.cart[i] === id) {
+          count++
+        }
+      }
+      return count
+    },
+    canAddToCart (aProduct) {
+      return aProduct.availableInventory > this.cartCount(aProduct.id)
     }
   },
   computed: {
     cartItemCount () {
       return this.cart.length || ''
     },
-    canAddToCart () {
-      return this.product.availableInventory > this.cartItemCount
-    },
-    canRemoveFromCart () {
-      return this.cart.length > 0
+    sortedProducts () {
+      function compare (a, b) {
+        if (a.title.toLowerCase() < b.title.toLowerCase()) {
+          return -1
+        }
+        if (a.title.toLowerCase() > b.title.toLowerCase()) {
+          return 1
+        }
+        return 0
+      }
+      if (this.products.length > 0) {
+        let productsArray = this.products.slice(0)
+        return productsArray.sort(compare)
+      }
     }
   },
   beforeCreate () {
@@ -87,9 +96,11 @@ let webstore = new Vue({
     }
   },
   created () {
-    if (APP_LOG_LIFECYCLE_EVENTS) {
-      console.log('created')
-    }
+    axios.get('./products.json')
+    .then(res => {
+      this.products = res.data.products
+      console.log(this.products)
+    })
   },
   beforeMount () {
     if (APP_LOG_LIFECYCLE_EVENTS) {
