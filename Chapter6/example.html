@@ -5,36 +5,17 @@
 </head>
 <body>
   <div id="app">
-     <my-component :num="myNumber" :str="passedString"
-                  :even="myNumber" :obj="passedObject"></my-component>
+    <my-component :my-info="message" inline-template>
+      <div>
+        <p>
+          inline-template - {{myInfo}}
+        </p>
+      </div>
+    </my-component>
   </div>
   <script>
   const MyComponent = {
-    template: '<div>Number: {{num}}<br />String: {{str}} \
-      <br />IsEven?: {{even}}<br/>Object:{{obj.message}}</div>',
-    props: {
-      num: {
-        type: Number,
-        required: true
-      },
-      str: {
-        type: String,
-        default: 'Hello World'
-      },
-      obj: {
-        type: Object,
-        default: () => {
-          return {
-            message: 'Hello from object'
-          }
-        }
-      },
-      even: {
-        validator: (value) => {
-          return (value % 2 === 0)
-        }
-      }
-    }
+    props: ['myInfo']
   }
   new Vue({
     el: '#app',
@@ -43,11 +24,7 @@
     },
     data () {
       return {
-        passedString: 'Hello from parent',
-        myNumber: 44,
-        passedObject: {
-          message: 'Passed Object'
-        }
+        message: 'Hello world'
       }
     }
   })
