@@ -5,27 +5,21 @@
 </head>
 <body>
   <div id="app">
-    <my-component :my-info="message" inline-template>
-      <div>
-        <p>
-          inline-template - {{myInfo}}
-        </p>
-      </div>
-    </my-component>
+    <my-component></my-component>
   </div>
+  <script type="text/x-template" id="my-component">
+  <p>
+    Hello from x-template
+  </p>
+  </script>
   <script>
   const MyComponent = {
-    props: ['myInfo']
+    template: '#my-component'
   }
   new Vue({
     el: '#app',
     components: {
       'my-component': MyComponent
-    },
-    data () {
-      return {
-        message: 'Hello world'
-      }
     }
   })
   </script>
