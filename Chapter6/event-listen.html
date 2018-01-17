@@ -7,7 +7,7 @@
   <div id="app">
     {{counter}}<br/>
     <button v-on:click="incrementCounter">Increment Counter</button>
-    <my-component v-on:increment-me="incrementCounter"></my-component>
+    <my-component :my-counter.sync="counter"></my-component>
   </div>
   <script>
   const MyComponent = {
@@ -16,9 +16,10 @@
     </div>`,
     methods: {
       childIncrementCounter () {
-        this.$emit('increment-me')
+        this.$emit('update:myCounter', this.myCounter+1)
       }
-    }
+    },
+    props: ['my-counter']
   }
   new Vue({
     el: '#app',
