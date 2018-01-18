@@ -5,11 +5,11 @@
 </head>
 <body>
   <div id="app">
-    <form-component 
-    :author="authorLabel" 
-    :title="titleLabel">
-    <h1>{{header}}</h1>
-  </form-component>
+    <form-component>
+      <h1>{{header}}</h1>
+      <label for="title" slot="titleSlot">{{titleLabel}}</label>
+      <label for="author" slot="authorSlot">{{authorLabel}}</label>
+    </form-component>
   </div>
   <script>
   const FormComponent = {
@@ -17,15 +17,14 @@
     <div>
       <form>
       <slot></slot>
-        <label for="title">{{title}}</label>
+        <slot name="titleSlot"></slot>
           <input id="title" type="text" /><br/>
-        <label for="author" type="text" />{{author}}</label>
+        <slot name="authorSlot"></slot>
           <input id="author" type="text" /><br/>
         <button>Submit</button>
       </form>
     </div>
-    `,
-    props: ['title', 'author']
+    `
   }
   new Vue({
     el: '#app',
